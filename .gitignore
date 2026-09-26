@@ -5,3 +5,8 @@ resources/
 
 # Obsidian local configurations
 .obsidian/
+
+# Editor swap files
+*.swp
+*.swo
+.DS_Store

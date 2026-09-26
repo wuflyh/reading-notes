@@ -3,7 +3,8 @@ name: Deploy Hugo Site to Pages
 on:
   push:
     branches:
-      - main  # Change this to master if your default branch is master
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
