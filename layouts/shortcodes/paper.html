@@ -1,0 +1,8 @@
+<div class="paper-meta" style="border-left:3px solid #ccc;padding:0.5em 1em;margin:1em 0;background:rgba(0,0,0,0.03);font-size:0.95em;">
+  {{ with .Page.Params.meta.authors }}
+    {{ if gt (len .) 0 }}<div><strong>Authors:</strong> {{ delimit . ", " }}</div>{{ end }}
+  {{ end }}
+  {{ with .Page.Params.meta.venue }}<div><strong>Venue:</strong> {{ . }}</div>{{ end }}
+  {{ with .Page.Params.meta.year }}<div><strong>Year:</strong> {{ . }}{{ with $.Page.Params.meta.month }}-{{ printf "%02d" . }}{{ end }}</div>{{ end }}
+  {{ with .Page.Params.meta.url }}<div><a href="{{ . }}" target="_blank" rel="noopener">Paper link →</a></div>{{ end }}
+</div>
