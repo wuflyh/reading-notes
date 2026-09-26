@@ -1,6 +1,6 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://wuflyh.github.io/reading-notes'
 locale = 'en-us'
-title = 'My Paper Reading Notes'
+title = "Fei's Paper Reading Notes"
 theme = "PaperMod"
 
 [markup]
