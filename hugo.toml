@@ -1,6 +1,6 @@
 baseURL = 'https://wuflyh.github.io/reading-notes/'
 locale = 'en-us'
-title = "Fei's Paper Reading Notes"
+title = "My Paper Reading Notes"
 theme = "PaperMod"
 
 [markup]
