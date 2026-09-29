@@ -44,7 +44,23 @@ $$
 
 Where $\mathcal{D}$ is the dataset with feature vectors $\mathbf{x}_i \in \mathbb{R}^d$ and labels $y_i \in \mathbb{R}$; $\mathbf{S}$ is the sequence of $(2n+1)$ tokens, whose last token $\mathbf{x}_{\text{query}}$ is the encoded query vector. The first coordinate acts as a scalar/label channel (holding ${y}_i$ or $\hat{y_i}$). The remaining $d$ coordinates hold the feature vectors $\mathbf{x}_i$.
 
-- **Step2**: Forward inference from left to right equals one step of gradient descent — the current prediction is performed (MLP/Attention), residual error computed (Causal Attention/Residual), gradient aggregated (Self-Attention Pooling), and weight vector updated (Residual Stream Addition).
+- **Step2**: Forward inference from left to right equals one step of gradient descent — **(1)** the current prediction is performed (MLP/Attention), **(2)** residual error computed (Causal Attention/Residual), **(3)** gradient aggregated (Self-Attention Pooling), and **(4)** weight vector updated (Residual Stream Addition)
+$$
+\hat{y}_i = \mathbf{w}^{(l)\top} \mathbf{x}_i \tag{1}
+$$
+$$
+e_i = \hat{y}_i - y_i \tag{2}
+$$
+
+$$
+\Delta \mathbf{w} = -\frac{\eta}{n} \sum_{i=1}^n e_i \mathbf{x}_i \tag{3}
+$$
+$$
+\mathbf{w}^{(l+1)} = \mathbf{w}^{(l)} + \Delta \mathbf{w} \tag{4}
+$$
+
+
+
 - **Step3**: Loop Step 2 $L$ times, where $L$ is the number of transformer layers.
 - **Step4**: Make the final prediction with the query vector and the weight vector.
 
