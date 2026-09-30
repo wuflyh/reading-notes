@@ -59,13 +59,40 @@ $$
 \mathbf{w}^{(l+1)} = \mathbf{w}^{(l)} + \Delta \mathbf{w} \tag{4}
 $$
 
+- **Step3**: Loop Step2 $L$ times, where $L$ is the number of transformer layers.
+- **Step4**: Make the final prediction with the query vector and the weight vector, writing the scalar into the label coordinate of the output token
+$$\hat{y}_{\text{query}} = \mathbf{w}^{*\top} \mathbf{x}_{\text{query}}$$
 
+## 3. How is the transformer trained?
 
-- **Step3**: Loop Step 2 $L$ times, where $L$ is the number of transformer layers.
-- **Step4**: Make the final prediction with the query vector and the weight vector.
+The transformer is trained across a massive distribution of different synthetic regression tasks  using mean squared error (MSE) loss
 
-## 3. Key Mathematical Formulations
+$$\min_{\theta} \mathbb{E}_{f \sim p(f), \; \mathbf{x}_1, \dots, \mathbf{x}_n \sim p(\mathbf{x})} \left[ \sum_{i=1}^n \mathcal{L}\Big(f(\mathbf{x}_i), \; T_\theta([\tilde{\mathbf{x}}_1, \tilde{\mathbf{y}}_1, \dots, \tilde{\mathbf{x}}_i])\Big) \right]$$
 
+Each regression dataset is sampled on the fly:
 
-## 4. Personal Insights
+- Task / Weight Vector Sampling ($p(f)$)
+$$
+$\mathbf{w}^* \sim \mathcal{N}(\mathbf{0}, \mathbf{I}_d)
+$$
+- Feature Input Sampling ($p(\mathbf{x})$)
+$$
+\mathbf{x}_i \sim \mathcal{N}(\mathbf{0}, \mathbf{I}_d) \quad \text{or} \quad \mathcal{N}(\mathbf{0}, \boldsymbol{\Sigma})
+$$
+- Label Generation (with optional noise)
+$$
+y_i = \mathbf{w}^{*\top} \mathbf{x}_i + \epsilon_i, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)
+$$
+- Sequence Construction
+$$[\tilde{\mathbf{x}}_1, \tilde{\mathbf{y}}_1, \tilde{\mathbf{x}}_2, \tilde{\mathbf{y}}_2, \dots, \tilde{\mathbf{x}}_n, \tilde{\mathbf{y}}_n]$$
+Note: the error loss is back propagated on the $\tilde{\mathbf{x}}_i$ positions, but not the $\tilde{\mathbf{y}}_i$ token positions
+## 4. Take away
 
+- The transformer is a meta-learner, instead of being a standard supervised learning model that learns a function $f: \mathcal{X} \to \mathcal{Y}$ a.k.a 
+$$\mathbf{x} \mapsto \hat{y} \quad (\text{Parameters encode } \mathbf{w})$$, it learns a mapping from an entire training dataset $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ and an arbitrary query point $\mathbf{x}$ to a prediction $$\mathcal{A}: (\mathcal{D}, \mathbf{x}) \mapsto \hat{y} \quad (\text{Parameters encode an algorithm } \mathcal{A})$$
+- Large language models (and transformers trained on sequence prediction) are the modern expression of **model-based meta-learners**
+- Meta learning usually have two loops, the task adaptation **inner loop** takes one single standard gradient descent step
+  $$\theta'_1 = \theta - \alpha \nabla_\theta \mathcal{L}_{\mathcal{D}_{\text{supp}}}(\theta)$$
+the meta-optimization **outer loop** updates $\theta$ using the test loss (computed using $\theta'_1$)
+$$\theta \leftarrow \theta - \beta \nabla_\theta \mathcal{L}_{\mathcal{D}_{\text{query}}}(\theta'_1)$$
+At inference time, the sampled input only changes the adapted parameters ($\theta'$) via the inner loop gradient step. 
