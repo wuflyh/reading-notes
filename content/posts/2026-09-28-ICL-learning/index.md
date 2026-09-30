@@ -86,7 +86,7 @@ $$
 - Sequence Construction
 $$[\tilde{\mathbf{x}}_1, \tilde{\mathbf{y}}_1, \tilde{\mathbf{x}}_2, \tilde{\mathbf{y}}_2, \dots, \tilde{\mathbf{x}}_n, \tilde{\mathbf{y}}_n]$$
 Note: the error loss is back propagated on the $\tilde{\mathbf{x}}_i$ positions, but not the $\tilde{\mathbf{y}}_i$ token positions
-## 4. Take away
+## 4. Takeaways
 
 - The transformer is a meta-learner, instead of being a standard supervised learning model that learns a function $f: \mathcal{X} \to \mathcal{Y}$ a.k.a 
 $$\mathbf{x} \mapsto \hat{y} \quad (\text{Parameters encode } \mathbf{w})$$, it learns a mapping from an entire training dataset $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ and an arbitrary query point $\mathbf{x}$ to a prediction $$\mathcal{A}: (\mathcal{D}, \mathbf{x}) \mapsto \hat{y} \quad (\text{Parameters encode an algorithm } \mathcal{A})$$
