@@ -1,0 +1,33 @@
+{{- define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}<div class="post-description">{{ . }}</div>{{ end }}
+</header>
+
+<article class="post-single">
+  <div class="post-content">
+    <p>Have a question, a paper suggestion, or spotted an error in a note? Drop me a line — I read everything.</p>
+
+    <form action="https://formspree.io/f/mrpbjjza" method="POST" class="contact-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="_subject" placeholder="Optional">
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <!-- Honeypot: bots fill this, humans don't see it -->
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</article>
+
+{{- end }}

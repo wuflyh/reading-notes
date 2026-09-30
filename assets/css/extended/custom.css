@@ -30,6 +30,47 @@
 .dark { --link: #7dd3fc; }    /* pale sky blue */
 a { color: var(--link); }
 
+/* ---------- Contact form ---------- */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 40rem;
+  margin-top: 1rem;
+}
+.contact-form label {
+  font-weight: 600;
+  color: var(--primary);
+  margin-top: 0.5rem;
+}
+.contact-form input,
+.contact-form textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--entry);
+  color: var(--content);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--link);
+}
+.contact-form button {
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--link);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.contact-form button:hover { opacity: 0.9; }
+
 /* ---------- Typography (existing) ---------- */
 .post-title { font-size: 2rem; }
 .post-content { font-size: 0.9rem; line-height: 1.65; }
