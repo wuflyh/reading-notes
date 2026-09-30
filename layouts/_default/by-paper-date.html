@@ -1,0 +1,27 @@
+{{- define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}<div class="post-description">{{ . }}</div>{{ end }}
+</header>
+
+{{- $posts := where site.RegularPages "Section" "posts" }}
+{{- $sorted := ($posts.ByParam "meta.year").Reverse }}
+
+<div class="archive-posts">
+  {{- range $sorted }}
+  <div class="archive-entry">
+    <h3 class="archive-entry-title">
+      <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+    </h3>
+    <div class="archive-meta">
+      {{- with .Params.meta.year }}<strong>{{ . }}</strong>{{ end -}}
+      {{- with .Params.meta.month }}/{{ . }}{{ end -}}
+      {{- with .Params.meta.venue }} &middot; {{ . }}{{ end -}}
+      {{- with .Params.meta.authors }} &middot; {{ delimit . ", " }}{{ end }}
+    </div>
+  </div>
+  {{- end }}
+</div>
+
+{{- end }}

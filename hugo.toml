@@ -3,6 +3,51 @@ locale = 'en-us'
 title = "My Paper Reading Notes"
 theme = "PaperMod"
 
+# Enable JSON output for the search index (Fuse.js)
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# Tags & categories are Hugo defaults, listed here explicitly for clarity
+[taxonomies]
+  tag = "tags"
+
+# Menu — appears in the site header
+[menu]
+  [[menu.main]]
+    identifier = "by-paper-date"
+    name = "By Paper Date"
+    url = "/by-paper-date/"
+    weight = 10
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 30
+
+# PaperMod theme parameters
+[params]
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ["title", "permalink", "summary", "content"]
+
 [markup]
   [markup.goldmark]
     [markup.goldmark.extensions]
