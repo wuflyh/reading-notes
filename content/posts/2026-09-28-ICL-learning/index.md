@@ -91,8 +91,8 @@ Note: the error loss is back propagated on the $\tilde{\mathbf{x}}_i$ positions,
 - The transformer is a meta-learner, instead of being a standard supervised learning model that learns a function $f: \mathcal{X} \to \mathcal{Y}$ a.k.a 
 $$\mathbf{x} \mapsto \hat{y} \quad (\text{Parameters encode } \mathbf{w})$$, it learns a mapping from an entire training dataset $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ and an arbitrary query point $\mathbf{x}$ to a prediction $$\mathcal{A}: (\mathcal{D}, \mathbf{x}) \mapsto \hat{y} \quad (\text{Parameters encode an algorithm } \mathcal{A})$$
 - Large language models (and transformers trained on sequence prediction) are the modern expression of **model-based meta-learners**
-- Meta learning usually have two loops, the task adaptation **inner loop** takes one single standard gradient descent step
+- Meta learnings usually have two loops, the task adaptation **inner loop** takes one single standard gradient descent step
   $$\theta'_1 = \theta - \alpha \nabla_\theta \mathcal{L}_{\mathcal{D}_{\text{supp}}}(\theta)$$
-the meta-optimization **outer loop** updates $\theta$ using the test loss (computed using $\theta'_1$)
+and the meta-optimization **outer loop** updates $\theta$ using the test loss (computed using $\theta'_1$)
 $$\theta \leftarrow \theta - \beta \nabla_\theta \mathcal{L}_{\mathcal{D}_{\text{query}}}(\theta'_1)$$
 At inference time, the sampled input only changes the adapted parameters ($\theta'$) via the inner loop gradient step. 
