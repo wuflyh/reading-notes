@@ -5,4 +5,13 @@
   {{ with .Page.Params.meta.venue }}<div><strong>Venue:</strong> {{ . }}</div>{{ end }}
   {{ with .Page.Params.meta.year }}<div><strong>Year:</strong> {{ . }}{{ with $.Page.Params.meta.month }}-{{ printf "%02d" . }}{{ end }}</div>{{ end }}
   {{ with .Page.Params.meta.url }}<div><a href="{{ . }}" target="_blank" rel="noopener">Paper link →</a></div>{{ end }}
+  {{ with .Page.Params.meta.rating }}
+    <div class="paper-rating" title="Rating: {{ . }}/5"><strong>Rating:</strong>
+      {{- $r := . -}}
+      {{- range seq 1 5 -}}
+        {{- if le . $r -}}<span style="color:#f5b301;">★</span>{{- else -}}<span style="color:#ccc;">★</span>{{- end -}}
+      {{- end -}}
+    </div>
+  {{ end }}
 </div>
+

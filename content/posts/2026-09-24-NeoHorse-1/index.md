@@ -10,6 +10,7 @@ meta:
   url: "https://arxiv.org/abs/2609.08183"
   year: 2026
   month: 9
+  rating: 4
 ---
 {{< paper >}}
 ## 1. Executive Summary

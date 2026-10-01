@@ -4,15 +4,17 @@ date: 2026-09-28
 tags:
   - ICL
   - meta-learning
+  - transformer
 math: true
 draft: false
 meta:
   authors:
     - Ekin Akyurek et al.
-  venue: "ICLR 2023"
+  venue: ICLR 2023
   url: https://arxiv.org/abs/2211.15661
   year: 2023
   month: 5
+  rating: 4
 ---
 {{< paper >}}
 

@@ -10,6 +10,7 @@ meta:
   url: ""
   year:
   month:
+  rating:
 ---
 {{`{{< paper >}}`}}
 
