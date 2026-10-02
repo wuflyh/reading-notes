@@ -1,7 +1,7 @@
 ---
 title: |-
   WikiSkill: Compiling Agent Experience into
-  Persistent Knowledge for Skill EvolutionPaper Title Here
+  Persistent Knowledge for Skill Evolution
 date: 2026-10-01T16:20:03-07:00
 tags:
   - Skills
