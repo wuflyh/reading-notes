@@ -7,6 +7,8 @@ tags:
   - on-policy
   - off-policy
   - distillation
+  - RL
+  - KL-divergence
 math: true
 draft: false
 meta:
