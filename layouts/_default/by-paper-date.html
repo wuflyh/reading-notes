@@ -6,10 +6,20 @@
 </header>
 
 {{- $posts := where site.RegularPages "Section" "posts" }}
-{{- $sorted := ($posts.ByParam "meta.year").Reverse }}
+
+{{/* Build composite sort key: year * 100 + month, so same-year posts sort by month */}}
+{{- $items := slice }}
+{{- range $posts }}
+  {{- $y := .Params.meta.year | default 0 | int }}
+  {{- $m := .Params.meta.month | default 0 | int }}
+  {{- $key := add (mul $y 100) $m }}
+  {{- $items = $items | append (dict "page" . "key" $key) }}
+{{- end }}
+{{- $sorted := sort $items "key" "desc" }}
 
 <div class="archive-posts">
   {{- range $sorted }}
+  {{- with .page }}
   <div class="archive-entry">
     <h3 class="archive-entry-title">
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
@@ -19,8 +29,16 @@
       {{- with .Params.meta.month }}/{{ . }}{{ end -}}
       {{- with .Params.meta.venue }} &middot; {{ . }}{{ end -}}
       {{- with .Params.meta.authors }} &middot; {{ delimit . ", " }}{{ end }}
+      {{- with .Params.meta.rating }}
+        &middot;
+        {{- $r := . -}}
+        {{- range seq 1 5 -}}
+          {{- if le . $r -}}<span style="color:#f5b301;">★</span>{{- else -}}<span style="color:#ccc;">★</span>{{- end -}}
+        {{- end -}}
+      {{- end }}
     </div>
   </div>
+  {{- end }}
   {{- end }}
 </div>
 
