@@ -54,6 +54,12 @@ theme = "PaperMod"
     keys = ["title", "permalink", "summary", "content"]
 
 [markup]
+  [markup.highlight]
+    style = "monokai"         # try: dracula, nord, github, solarized-dark, vs, catppuccin-mocha
+    lineNos = false           # set true for line numbers
+    lineNumbersInTable = true
+    noClasses = true          # inline styles (easier) — set false if you want to use custom CSS
+    tabWidth = 4
   [markup.goldmark]
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.passthrough]
