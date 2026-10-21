@@ -134,3 +134,64 @@ class TemperatureScaler(nn.Module):
 T = 1.48  # Fitted scalar from validation
 calibrated_probs = torch.softmax(raw_logits / T, dim=-1)  
 ```
+## 5.  Choose threshold for Classifier after Calibration
+In real-world production systems, classifiers almost never rely on the default $0.5$ cutoff. Instead, threshold selection is an operational decision driven by cost economics, operational capacity, business constraints, or explicit probability semantics.
+
+#### 1. The Cost-Utility Matrix (Bayesian Decision Theory)
+The most rigorous way to pick a threshold is to translate classification outcomes directly into monetary costs or utility gains.
+
+Let:
+
+- $C_{\text{FP}}$: Cost of a False Positive (e.g., blocking a legitimate user, inspecting a clean transaction).
+    
+- $C_{\text{FN}}$: Cost of a False Negative (e.g., letting fraud pass through, missing a malignancy).
+    
+- $B_{\text{TP}}$: Benefit of a True Positive.
+    
+- $B_{\text{TN}}$: Benefit of a True Negative.
+    
+
+Given a calibrated probability $\hat{p} = \mathbb{P}(Y = 1 \mid X = x)$, the expected profit/loss for predicting $\hat{Y} = 1$ versus $\hat{Y} = 0$ equates at the optimal Bayesian cutoff $\tau^*$:
+
+$$\tau^* = \frac{C_{\text{FP}} - B_{\text{TN}}}{(C_{\text{FP}} - B_{\text{TN}}) + (C_{\text{FN}} - B_{\text{TP}})}$$
+
+Assuming neutral benefits ($B_{\text{TP}} = B_{\text{TN}} = 0$):
+
+$$\tau^* = \frac{C_{\text{FP}}}{C_{\text{FP}} + C_{\text{FN}}} = \frac{1}{1 + \frac{C_{\text{FN}}}{C_{\text{FP}}}}$$
+
+- **Financial Fraud / Malignancy ($C_{\text{FN}} \gg C_{\text{FP}}$):** If missing a fraudulent wire transfer costs $5,000 and sending a benign transaction to manual review costs $50, the ratio $\frac{C_{\text{FN}}}{C_{\text{FP}}} = 100$. The optimal threshold drops to:
+    
+    $$\tau^* = \frac{50}{50 + 5000} \approx 0.0099 \quad (0.99\%)$$
+    
+- **Content Flagging / High-Volume Spans ($C_{\text{FP}} \gg C_{\text{FN}}$):** If wrongly banning a paying account destroys customer lifetime value, $\tau^*$ shifts high (e.g., $0.95+$).
+#### 2. Practical Implementation Pattern
+A production pattern sweeps the threshold sweep on validation logits, fits the optimal cutoff under an objective function, and applies it during inference:
+```python
+import numpy as np
+from sklearn.metrics import precision_recall_curve
+
+def optimize_threshold(val_labels, val_probs, cost_fp=50.0, cost_fn=500.0):
+    precisions, recalls, thresholds = precision_recall_curve(val_labels, val_probs)
+    
+    # Avoid zero division on edge bins
+    thresholds = np.append(thresholds, 1.0)
+    
+    total_positives = np.sum(val_labels == 1)
+    total_negatives = np.sum(val_labels == 0)
+    
+    # Calculate costs across all threshold cutoffs
+    fn = (1.0 - recalls) * total_positives
+    tp = recalls * total_positives
+    # precision = tp / (tp + fp)  ==>  fp = tp * (1 - precision) / precision
+    fp = np.where(precisions > 0, tp * (1.0 - precisions) / np.maximum(precisions, 1e-7), 0)
+    
+    total_cost = (fp * cost_fp) + (fn * cost_fn)
+    best_idx = np.argmin(total_cost)
+    
+    return thresholds[best_idx], total_cost[best_idx]
+
+# Production evaluation
+best_tau, min_cost = optimize_threshold(y_val, calibrated_val_probs, cost_fp=50, cost_fn=500)
+# Inference rule:
+# final_action = (live_calibrated_prob >= best_tau)
+```
