@@ -65,7 +65,7 @@ The **two-tower** model consists of two encoders (*An encoder is a neural networ
 - using **clicks** (or impressions) as positive and **random** (or non-click impressions) as negative can provide a reasonable model performance. 
 - Counterintuitively, models trained simply using hard negatives **cannot** outperform models trained with random negatives. 
 - **blending** random and hard negatives in training is advantageous. Increasing the ratio of easy to hard negatives continues to improve the model recall and saturated at easy:hard=**100:1**
-## 4. How does nn operator works
+## 4. How does nn operator work
 
 In search engines like Lucene or Facebook's Unicorn, a **"term"** is the fundamental key part of the inverted index—conceptually a tuple of `(field, value)` mapped to a posting list that represents a list of documents. Systems regularly use synthetic or derived identifiers as terms (e.g., `friend:12345`, `tag:verified`, `location:94025`).
 
