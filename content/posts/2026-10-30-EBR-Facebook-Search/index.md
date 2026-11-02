@@ -77,12 +77,14 @@ Hybrid retrieval expressions, with arbitrary combinations of embeddings and term
 
 The Unicorn compiled Faiss’s **Inverted File with Product Quantization (IVFPQ)** algorithms directly onto the search engine's inverted index data structures. 
 ## 5. Personal Insights
-#### Multi-stage ranking
+#### Multi-Stage ranking
 A modern search engine system is a complex multi-stage ranking system where each stage progressively refines the results from the preceding stage.  At large it has 3 layers:
 - Retrieval Layer **(L0)** (e.g. Boolean Term Matcher or EBR) that returns ~10k candidates
 - First-Stage Ranker **(L1)** (e.g. Linear Ranker such as LTR/GBDT/XGBoost that returns ~1k candidates)
 - Second-Stage Ranker **(L2)** (e.g. Deep Neural Network (DLRM-style) with hundreds of sparse/dense features that returns ~10 results)
+
 As being trained on data by old L0, rankers (L1/L2) might assigned poor scores and demoted documents retrieved by new L0. Two approaches are executed to address this issue:
+
 - Add embedding as ranking feature
 - Training data feedback loop (logged the results with new L0 and sent for human rating and retrain the ranker)
 #### Multi-Task Learning ranking
@@ -99,5 +101,4 @@ The final weights are validated via **online A/B testing** in production before 
 In modern production search and recommendation architectures, transformers in L2/L3 are definitely the dominant industry standard in the following scenarios:
 - **Long User Sequence Modeling in L2 (User Action Transformers)** Modern L2 rankers (like Alibaba's BST/SIM or Google's Transformers for Recommendations) use multi-head self-attention over chronologically ordered user engagement sequences (past searches, clicks, conversions).
 - **Listwise Reranking in L3 (Slate / Mutual Influence Modeling)** Standard L2 rankers score each candidate item independently ($P(Y \mid q, d_i)$). However, in the final display slate, items compete with or complement each other (e.g., showing five identical blue shirts vs. a diverse set of styles). (Like **PRM (Personalized Reranking Model)** or **DLCM**)
-- **Cross-Encoder Semantic Scoring in Text-Heavy Verticals** In document search, legal/patent search, and enterprise Q&A, shallow query-document matching struggles with nuanced language. Small distilled cross-encoders (e.g., 3-to-6 layer MiniLM or RoBERTa variants) score the top 50–100 candidates directly:
-$$\text{Score} = \text{Transformer}(\text{[CLS]} + \text{Query} + \text{[SEP]} + \text{DocText})$$
+- **Cross-Encoder Semantic Scoring in Text-Heavy Verticals** In document search, legal/patent search, and enterprise Q&A, shallow query-document matching struggles with nuanced language. Small distilled cross-encoders (e.g., 3-to-6 layer MiniLM or RoBERTa variants) score the top 50–100 candidates directly:$$\text{Score} = \text{Transformer}(\text{[CLS]} + \text{Query} + \text{[SEP]} + \text{DocText})$$
