@@ -5,9 +5,10 @@ tags:
   - Semantic-Search
   - EBR
   - ANN
-  - Solr
   - Faiss
   - two-tower
+  - Lucene
+  - Search
 math: true
 draft: false
 meta:
