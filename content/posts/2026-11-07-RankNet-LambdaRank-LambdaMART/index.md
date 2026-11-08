@@ -56,7 +56,7 @@ The total gradient with respect to parameter $w_k$ across the entire query then 
 ##### The Structural Flaw
 
 RankNet minimizes the total count of pairwise inversions. However, search users care disproportionately about errors at the top of the result page. In RankNet, swapping rank 1 and rank 2 generates the exact same gradient magnitude as swapping rank 99 and rank 100. Furthermore, RankNet cannot directly optimize NDCG, because NDCG is discontinuous with respect to model scores.
-
+![](flaw.png)
 ## 3. LambdaRank
 
 ##### The Lambda Formula
