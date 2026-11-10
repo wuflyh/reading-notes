@@ -145,6 +145,12 @@ a { color: var(--link); }
   border-color: var(--link);
 }
 
+/* Force the HTML `hidden` attribute to beat PaperMod's `display: flex` on .terms-tags */
+.terms-tags[hidden],
+.tags-index[hidden] {
+  display: none !important;
+}
+
 /* ---------- By-year index: collapsible year groups ---------- */
 .by-year-index {
   margin: 1rem 0;
