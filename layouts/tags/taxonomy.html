@@ -1,0 +1,90 @@
+{{- define "main" }}
+
+{{- if .Title }}
+<header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- if .Description }}
+    <div class="post-description">{{ .Description }}</div>
+    {{- end }}
+</header>
+{{- end }}
+
+{{- $type := .Type }}
+{{- $terms := .Data.Terms.Alphabetical }}
+
+<div class="tags-view-toggle">
+  <button type="button" class="tags-toggle-btn is-active" data-view="grouped">Grouped A–Z</button>
+  <button type="button" class="tags-toggle-btn" data-view="flat">Show all</button>
+</div>
+
+{{- /* ---------- Grouped view (collapsible by letter) ---------- */}}
+
+{{- $groups := newScratch }}
+{{- range $terms }}
+  {{- $firstChar := upper (substr .Name 0 1) }}
+  {{- $letter := cond (in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" $firstChar) $firstChar "#" }}
+  {{- $groups.Add $letter (slice .) }}
+{{- end }}
+
+<div class="tags-index tags-view-grouped">
+  {{- range $letter := slice "#" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z" }}
+    {{- $items := $groups.Get $letter }}
+    {{- with $items }}
+      <details class="tags-group">
+        <summary>
+          <strong class="tags-letter">{{ $letter }}</strong>
+          <span class="tags-letter-count">({{ len . }})</span>
+        </summary>
+        <ul class="terms-tags">
+          {{- range . }}
+            {{- $name := .Name }}
+            {{- $count := .Count }}
+            {{- with site.GetPage (printf "/%s/%s" $type $name) }}
+            <li>
+              <a href="{{ .Permalink }}">{{ .LinkTitle }} <sup><strong>{{ $count }}</strong></sup></a>
+            </li>
+            {{- end }}
+          {{- end }}
+        </ul>
+      </details>
+    {{- end }}
+  {{- end }}
+</div>
+
+{{- /* ---------- Flat view (all tags, no grouping) ---------- */}}
+
+<ul class="terms-tags tags-view-flat" hidden>
+  {{- range $terms }}
+    {{- $name := .Name }}
+    {{- $count := .Count }}
+    {{- with site.GetPage (printf "/%s/%s" $type $name) }}
+    <li>
+      <a href="{{ .Permalink }}">{{ .LinkTitle }} <sup><strong>{{ $count }}</strong></sup></a>
+    </li>
+    {{- end }}
+  {{- end }}
+</ul>
+
+<script>
+(function () {
+  const buttons = document.querySelectorAll('.tags-toggle-btn');
+  const grouped = document.querySelector('.tags-view-grouped');
+  const flat    = document.querySelector('.tags-view-flat');
+  const STORE_KEY = 'tagsView';
+
+  function apply(view) {
+    const isFlat = view === 'flat';
+    grouped.hidden = isFlat;
+    flat.hidden = !isFlat;
+    buttons.forEach(b => b.classList.toggle('is-active', b.dataset.view === view));
+    try { localStorage.setItem(STORE_KEY, view); } catch (_) {}
+  }
+
+  buttons.forEach(b => b.addEventListener('click', () => apply(b.dataset.view)));
+
+  const saved = (function () { try { return localStorage.getItem(STORE_KEY); } catch (_) { return null; } })();
+  if (saved === 'flat') apply('flat');
+})();
+</script>
+
+{{- end }}

@@ -71,6 +71,149 @@ a { color: var(--link); }
 }
 .contact-form button:hover { opacity: 0.9; }
 
+/* ---------- Tags index: alphabetical collapsible groups ---------- */
+.tags-index {
+  margin: 1rem 0;
+}
+.tags-index details.tags-group {
+  margin: 0.4rem 0;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--entry);
+}
+.tags-index details.tags-group summary {
+  cursor: pointer;
+  padding: 0.3rem 0;
+  list-style: none;
+  user-select: none;
+}
+.tags-index details.tags-group summary::-webkit-details-marker {
+  display: none;
+}
+.tags-index details.tags-group summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5em;
+  color: var(--secondary);
+  transition: transform 0.15s ease;
+}
+.tags-index details.tags-group[open] summary::before {
+  transform: rotate(90deg);
+}
+.tags-index .tags-letter {
+  font-size: 1.15rem;
+  color: var(--primary);
+}
+.tags-index .tags-letter-count {
+  margin-left: 0.5em;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+.tags-index details.tags-group summary:hover .tags-letter {
+  color: var(--link);
+}
+.tags-index .terms-tags {
+  margin-top: 0.75em;
+  margin-bottom: 0.25em;
+}
+
+/* Toggle buttons for tag view */
+.tags-view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1rem 0;
+}
+.tags-toggle-btn {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--entry);
+  color: var(--content);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.tags-toggle-btn:hover {
+  border-color: var(--link);
+  color: var(--link);
+}
+.tags-toggle-btn.is-active {
+  background: var(--link);
+  color: white;
+  border-color: var(--link);
+}
+
+/* ---------- By-year index: collapsible year groups ---------- */
+.by-year-index {
+  margin: 1rem 0;
+}
+.by-year-index details.year-group {
+  margin: 0.4rem 0;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--entry);
+}
+.by-year-index details.year-group summary {
+  cursor: pointer;
+  padding: 0.3rem 0;
+  list-style: none;
+  user-select: none;
+}
+.by-year-index details.year-group summary::-webkit-details-marker {
+  display: none;
+}
+.by-year-index details.year-group summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5em;
+  color: var(--secondary);
+  transition: transform 0.15s ease;
+}
+.by-year-index details.year-group[open] summary::before {
+  transform: rotate(90deg);
+}
+.by-year-index .year-label {
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+.by-year-index .year-count {
+  margin-left: 0.5em;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+.by-year-index details.year-group summary:hover .year-label {
+  color: var(--link);
+}
+.by-year-index .archive-posts {
+  margin-top: 0.75em;
+  margin-bottom: 0.25em;
+}
+
+/* Expand/collapse toggle buttons for the By-Paper-Date page */
+.by-year-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1rem 0;
+}
+.by-year-btn {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--entry);
+  color: var(--content);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.by-year-btn:hover {
+  border-color: var(--link);
+  color: var(--link);
+}
+
 /* ---------- Typography (existing) ---------- */
 .post-title { font-size: 2rem; }
 .post-content { font-size: 0.9rem; line-height: 1.65; }

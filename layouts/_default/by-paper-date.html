@@ -7,39 +7,95 @@
 
 {{- $posts := where site.RegularPages "Section" "posts" }}
 
-{{/* Build composite sort key: year * 100 + month, so same-year posts sort by month */}}
-{{- $items := slice }}
+<div class="by-year-toggle">
+  <button type="button" class="by-year-btn" data-action="expand">Expand all</button>
+  <button type="button" class="by-year-btn" data-action="collapse">Collapse all</button>
+</div>
+
+{{- /* Group posts by meta.year using Scratch */}}
+{{- $groups := newScratch }}
+{{- $years := slice }}
+{{- $undated := slice }}
 {{- range $posts }}
   {{- $y := .Params.meta.year | default 0 | int }}
   {{- $m := .Params.meta.month | default 0 | int }}
   {{- $key := add (mul $y 100) $m }}
-  {{- $items = $items | append (dict "page" . "key" $key) }}
-{{- end }}
-{{- $sorted := sort $items "key" "desc" }}
-
-<div class="archive-posts">
-  {{- range $sorted }}
-  {{- with .page }}
-  <div class="archive-entry">
-    <h3 class="archive-entry-title">
-      <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
-    </h3>
-    <div class="archive-meta">
-      {{- with .Params.meta.year }}<strong>{{ . }}</strong>{{ end -}}
-      {{- with .Params.meta.month }}/{{ . }}{{ end -}}
-      {{- with .Params.meta.venue }} &middot; {{ . }}{{ end -}}
-      {{- with .Params.meta.authors }} &middot; {{ delimit . ", " }}{{ end }}
-      {{- with .Params.meta.rating }}
-        &middot;
-        {{- $r := . -}}
-        {{- range seq 1 5 -}}
-          {{- if le . $r -}}<span style="color:#f5b301;">★</span>{{- else -}}<span style="color:#ccc;">★</span>{{- end -}}
-        {{- end -}}
-      {{- end }}
-    </div>
-  </div>
+  {{- if gt $y 0 }}
+    {{- $groups.Add (printf "%d" $y) (slice (dict "page" . "key" $key)) }}
+    {{- $years = $years | append $y }}
+  {{- else }}
+    {{- $undated = $undated | append (dict "page" . "key" $key) }}
   {{- end }}
+{{- end }}
+
+{{- $sortedYears := ($years | uniq | sort) | collections.Reverse }}
+
+<div class="by-year-index">
+  {{- range $year := $sortedYears }}
+    {{- $items := $groups.Get (printf "%d" $year) }}
+    {{- $sortedItems := sort $items "key" "desc" }}
+    <details class="year-group">
+      <summary>
+        <strong class="year-label">{{ $year }}</strong>
+        <span class="year-count">({{ len $items }})</span>
+      </summary>
+      <div class="archive-posts">
+        {{- range $sortedItems }}
+        {{- with .page }}
+        <div class="archive-entry">
+          <h3 class="archive-entry-title">
+            <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+          </h3>
+          <div class="archive-meta">
+            {{- with .Params.meta.year }}<strong>{{ . }}</strong>{{ end -}}
+            {{- with .Params.meta.month }}/{{ . }}{{ end -}}
+            {{- with .Params.meta.venue }} &middot; {{ . }}{{ end -}}
+            {{- with .Params.meta.authors }} &middot; {{ delimit . ", " }}{{ end }}
+            {{- with .Params.meta.rating }}
+              &middot;
+              {{- $r := . -}}
+              {{- range seq 1 5 -}}
+                {{- if le . $r -}}<span style="color:#f5b301;">★</span>{{- else -}}<span style="color:#ccc;">★</span>{{- end -}}
+              {{- end -}}
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
+        {{- end }}
+      </div>
+    </details>
+  {{- end }}
+
+  {{- with $undated }}
+    <details class="year-group">
+      <summary>
+        <strong class="year-label">Undated</strong>
+        <span class="year-count">({{ len . }})</span>
+      </summary>
+      <div class="archive-posts">
+        {{- range . }}
+        {{- with .page }}
+        <div class="archive-entry">
+          <h3 class="archive-entry-title">
+            <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+          </h3>
+        </div>
+        {{- end }}
+        {{- end }}
+      </div>
+    </details>
   {{- end }}
 </div>
+
+<script>
+(function () {
+  const buttons = document.querySelectorAll('.by-year-btn');
+  const allDetails = document.querySelectorAll('.by-year-index details.year-group');
+  buttons.forEach(b => b.addEventListener('click', () => {
+    const open = b.dataset.action === 'expand';
+    allDetails.forEach(d => { d.open = open; });
+  }));
+})();
+</script>
 
 {{- end }}
