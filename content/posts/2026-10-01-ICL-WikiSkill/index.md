@@ -7,6 +7,8 @@ tags:
   - Skills
   - Agent
   - Wiki
+categories:
+  - RL / Agents
 math: true
 draft: false
 meta:

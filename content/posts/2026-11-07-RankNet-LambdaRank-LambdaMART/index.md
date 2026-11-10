@@ -11,6 +11,8 @@ tags:
   - NDCG
   - Ranking
   - XGBoost
+categories:
+  - Retrieval & Ranking
 math: true
 draft: false
 meta:

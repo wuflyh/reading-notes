@@ -4,6 +4,8 @@ date: 2026-11-08T11:53:46-08:00
 tags:
   - LTR
   - RAG
+categories:
+  - Retrieval & Ranking
 math: true
 draft: false
 meta:

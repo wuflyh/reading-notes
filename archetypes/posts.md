@@ -2,6 +2,7 @@
 title: "Paper Title Here"
 date: {{ .Date }}
 tags: []
+categories: []
 math: true
 draft: false
 meta:

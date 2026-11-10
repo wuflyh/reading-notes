@@ -7,6 +7,8 @@ tags:
   - Overfitting
   - Batch-Normalization
   - Temperature
+categories:
+  - General ML
 math: true
 draft: false
 meta:

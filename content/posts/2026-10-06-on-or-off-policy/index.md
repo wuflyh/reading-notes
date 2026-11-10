@@ -9,6 +9,8 @@ tags:
   - distillation
   - RL
   - KL-divergence
+categories:
+  - LLM
 math: true
 draft: false
 meta:

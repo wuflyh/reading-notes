@@ -8,6 +8,8 @@ tags:
   - Self-improving
   - GRPO
   - SAGE
+categories:
+  - RL / Agents
 math: true
 draft: false
 meta:

@@ -2,6 +2,7 @@
 title: "NeoHorse-1: Towards Recursive Self-Improvement via Agentic Post-Training with Routing Harness" 
 date: 2026-09-24 
 tags: ["Agent", "RSI"] 
+categories: ["RL / Agents"]
 math: true 
 draft: false 
 meta:

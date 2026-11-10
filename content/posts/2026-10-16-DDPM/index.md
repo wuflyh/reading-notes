@@ -6,6 +6,8 @@ tags:
   - Stable-Diffusion
   - VAE
   - ELBO
+categories:
+  - Diffusion Models
 math: true
 draft: false
 meta:

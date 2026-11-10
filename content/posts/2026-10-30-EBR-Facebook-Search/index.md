@@ -9,6 +9,8 @@ tags:
   - two-tower
   - Lucene
   - Search
+categories:
+  - Retrieval & Ranking
 math: true
 draft: false
 meta:

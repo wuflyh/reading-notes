@@ -8,6 +8,8 @@ tags:
   - SWA
   - Speculative-Decoding
   - mHC
+categories:
+  - LLM
 math: true
 draft: false
 meta:

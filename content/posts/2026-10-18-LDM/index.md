@@ -8,6 +8,8 @@ tags:
   - Transformer
   - VAE
   - U-Net
+categories:
+  - Diffusion Models
 math: true
 draft: false
 meta:

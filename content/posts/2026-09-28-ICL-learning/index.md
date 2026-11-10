@@ -5,6 +5,8 @@ tags:
   - ICL
   - meta-learning
   - transformer
+categories:
+  - LLM
 math: true
 draft: false
 meta:
