@@ -1,6 +1,6 @@
 baseURL = 'https://wuflyh.github.io/reading-notes/'
 locale = 'en-us'
-title = "My Paper Reading Notes"
+title = "AI Paper Reading Notes"
 theme = "PaperMod"
 
 # Enable JSON output for the search index (Fuse.js)
@@ -50,6 +50,9 @@ theme = "PaperMod"
   ShowToc = true
   TocOpen = false
   ShowRelated = true
+
+  [params.footer]
+    text = "Read and written with an LLM as a thinking partner."
 
   [params.fuseOpts]
     isCaseSensitive = false

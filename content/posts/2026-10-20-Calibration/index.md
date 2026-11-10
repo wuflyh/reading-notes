@@ -8,7 +8,7 @@ tags:
   - Batch-Normalization
   - Temperature
 categories:
-  - General ML
+  - ML Fundamentals
 math: true
 draft: false
 meta:
