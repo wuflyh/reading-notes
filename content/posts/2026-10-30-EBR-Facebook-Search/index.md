@@ -6,7 +6,7 @@ tags:
   - EBR
   - ANN
   - Faiss
-  - two-tower
+  - Two-Tower
   - Lucene
   - Search
 categories:

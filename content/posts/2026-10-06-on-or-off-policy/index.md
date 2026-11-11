@@ -4,11 +4,11 @@ title: |-
   A SYSTEMATIC STUDY OF DISTILLATION DYNAMICS
 date: 2026-10-05T21:48:57-07:00
 tags:
-  - on-policy
-  - off-policy
-  - distillation
+  - On-Policy
+  - Off-Policy
+  - Distillation
   - RL
-  - KL-divergence
+  - KL-Divergence
 categories:
   - LLM
 math: true

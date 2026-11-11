@@ -3,8 +3,8 @@ title: What learning algorithm is in-context learning? Investigations with linea
 date: 2026-09-28
 tags:
   - ICL
-  - meta-learning
-  - transformer
+  - Meta-Learning
+  - Transformer
 categories:
   - LLM
 math: true

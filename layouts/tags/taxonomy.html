@@ -41,7 +41,7 @@
             {{- $count := .Count }}
             {{- with site.GetPage (printf "/%s/%s" $type $name) }}
             <li>
-              <a href="{{ .Permalink }}">{{ .LinkTitle }} <sup><strong>{{ $count }}</strong></sup></a>
+              <a href="{{ .Permalink }}"{{ with index site.Data.tags (lower .LinkTitle) }} title="{{ . }}"{{ end }}>{{ .LinkTitle }} <sup><strong>{{ $count }}</strong></sup></a>
             </li>
             {{- end }}
           {{- end }}
@@ -59,7 +59,7 @@
     {{- $count := .Count }}
     {{- with site.GetPage (printf "/%s/%s" $type $name) }}
     <li>
-      <a href="{{ .Permalink }}">{{ .LinkTitle }} <sup><strong>{{ $count }}</strong></sup></a>
+      <a href="{{ .Permalink }}"{{ with index site.Data.tags (lower .LinkTitle) }} title="{{ . }}"{{ end }}>{{ .LinkTitle }} <sup><strong>{{ $count }}</strong></sup></a>
     </li>
     {{- end }}
   {{- end }}
