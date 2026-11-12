@@ -307,7 +307,7 @@ for epoch in range(5):
     optimizer.step()
     print(f"Epoch {epoch+1} Complete - Query Loss: {total_loss:.4f}")
 ```
-### Architectural Notes
+##### Architectural Notes
 
 - **Grouping by Query is Mandatory:** Unlike pointwise classification where samples shuffle across a batch, Lambda gradients depend strictly on rank swaps within the **same query group**. Each forward/backward step must process query groups individually or use padded 3D tensors `(batch_size, num_candidates, feature_dim)`.
     
