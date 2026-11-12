@@ -16,6 +16,7 @@ dpr: "Dense Passage Retrieval - a neural network-based retrieval method with dua
 ebr: "Embedding-Based Retrieval"
 elbo: "Evidence Lower BOund — variational inference objective"
 faiss: "Facebook AI Similarity Search library"
+fm-index: "Ferragina-Manzini index, a compressed, full-text self-index data structure that combines compression and indexing, builds upon the Burrows-Wheeler Transform, and allows rapid pattern matching"
 gr: "Generative Retrieval - a modern search paradigm where a single neural network remembers documents within its internal parameters and generates document identifiers directly on query"
 grpo: "Group Relative Policy Optimization"
 icl: "In-Context Learning"
