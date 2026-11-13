@@ -1,6 +1,6 @@
 baseURL = 'https://wuflyh.github.io/reading-notes/'
 locale = 'en-us'
-title = "AI Paper Reading Notes"
+title = "Flying — My Paper Reading Notes"
 theme = "PaperMod"
 
 # Enable JSON output for the search index (Fuse.js)
